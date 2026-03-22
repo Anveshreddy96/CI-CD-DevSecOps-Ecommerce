@@ -13,13 +13,12 @@ pipeline {
             steps {
                 withSonarQubeEnv('mysonar') {
                     sh '''
-                        mvn sonar:sonar \
-                        -Dsonar.projectKey=E-commerceProject1 \
-                     '''
+                    mvn clean verify sonar:sonar \
+                    -Dsonar.projectKey=E-commerceProject1 
+                    '''
                     }
                 }
             }
-        }
         stage ("Build&Test") {
             steps {
                 sh 'mvn clean package'
