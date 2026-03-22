@@ -26,13 +26,30 @@ pipeline {
         }
         stage ("Artifact") {
             steps {
-                nexusArtifactUploader artifacts: [[artifactId: 'myweb', classifier: '', file: 'target/myweb-8.7.3.war', type: 'war']], credentialsId: 'nexus', groupId: 'in.javahome', nexusUrl: 'http://3.138.193.73:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'ecommerce-repo', version: '8.7.3'
+                nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: '3.23.59.37:8081',
+                    groupId: 'com.mycompany',
+                    version: '1.0.0',
+                    repository: 'maven-releases',
+                    credentialsId: 'nexus-cred',
+                    artifacts: [
+                        [artifactId: 'myweb', classifier: '', file: 'target/myweb-8.7.3.war', type: 'war']
+                    ]
+                )
             }
         }
         stage ("Deploy") {
             steps {
-                deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'appserver', path: '', url: 'http://3.14.8.175:8080/')], contextPath: 'myapp', war: 'target/*.war'
+                deploy adapters: [
+                    tomcat9(
+                        credentialsId: 'appserver',
+                        path: '',
+                        url: 'http://3.14.8.175:8080',
+                        contextPath: 'myapp'
+                    )
+                ],
+                war: 'target/myweb-8.7.3.war'
             }
         }
-    }
-}
