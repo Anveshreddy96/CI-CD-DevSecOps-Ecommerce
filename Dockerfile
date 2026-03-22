@@ -1,3 +1,2 @@
-FROM tomcat:8.0.20-jre8
-COPY tomcat-users.xml /usr/local/tomcat/conf
-COPY target/*.war /usr/local/tomcat/webapps/myweb.war
+FROM tomcat:9
+COPY target/myweb-8.7.3.war /usr/local/tomcat/webapps/
