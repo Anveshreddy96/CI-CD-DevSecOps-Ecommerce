@@ -12,12 +12,9 @@ pipeline {
         stage ("CQA") {
             steps {
                 withSonarQubeEnv('mysonar') {
-                    withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
                     sh '''
                         mvn sonar:sonar \
                         -Dsonar.projectKey=E-commerceProject1 \
-                        -Dsonar.host.url=http://13.58.73.56:9000 \
-                        -Dsonar.login=$SONAR_TOKEN
                      '''
                     }
                 }
